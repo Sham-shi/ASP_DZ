@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Шигапов ДЗ 4</h1>
+    <form class="p-0" method="post">
+        <label for="fib_count"></label>
+        <input id="fib_count" type="number" name="FibonacciCount" />
+        <input type="submit" value="Отправить" />
+    </form>
+
+    @if (Request.Method == "POST")
+    {
+        <h3>Метод POST</h3>
+        <h4>Числа Фибоначи в количестве @Model.FibonacciCount</h4>
+        <p>@Model.Output</p>
+    }
+    
+    @if(Request.Method == "GET")
+    {
+        <h3>Метод GET</h3>
+        <h4>Числа Фибоначи в количестве @Model.FibonacciCount</h4>
+        <p>@Model.Output</p>
+    }
+    <p class="text-secondary p-2">Для метода GET ?FibonacciCount=</p>
+</div>

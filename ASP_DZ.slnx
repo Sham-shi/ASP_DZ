@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/DZ-2/">
+    <Project Path="DZ_2/DZ_2.csproj" Id="9b529b49-21c0-4a48-9653-44fef827d9a1" />
+  </Folder>
+  <Folder Name="/DZ-5/">
+    <Project Path="DZ_5/DZ_5.csproj" />
+  </Folder>
+</Solution>
