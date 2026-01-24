@@ -6,10 +6,12 @@
 
 <div class="text-center">
     <h1 class="display-4">Шигапов ДЗ 4</h1>
-    <form class="p-0" method="post">
-        <label for="fib_count"></label>
-        <input id="fib_count" type="number" name="FibonacciCount" />
-        <input type="submit" value="Отправить" />
+    <form class="m-3" method="post">
+        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
+            <label class="form-label mb-0" for="fib_count"> Введите количество чисел Фибоначчи</label>
+            <input class="form-control flex-shrink-1 w-auto" id="fib_count" type="number" name="FibonacciCount" />
+            <input class="btn btn-primary" type="submit" value="Отправить" />
+        </div>
     </form>
 
     @if (Request.Method == "POST")
