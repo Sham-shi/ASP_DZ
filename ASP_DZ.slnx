@@ -5,6 +5,9 @@
   <Folder Name="/DZ-3/">
     <Project Path="DZ_3/DZ_3.csproj" Id="ab4f7bae-c0b9-43d7-a858-410c3308a3d0" />
   </Folder>
+  <Folder Name="/DZ-4/">
+    <Project Path="DZ_4/DZ_4.csproj" Id="38f9fa65-f46b-4141-bfe5-52d38ff91a24" />
+  </Folder>
   <Folder Name="/DZ-5/">
     <Project Path="DZ_5/DZ_5.csproj" />
   </Folder>
