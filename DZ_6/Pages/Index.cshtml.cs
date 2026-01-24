@@ -21,7 +21,6 @@ namespace DZ_6.Pages
 
         public void OnGet()
         {
-            DisplayedDishes = [.. dishes.Values];
         }
 
         public void OnGetByName(string name)
