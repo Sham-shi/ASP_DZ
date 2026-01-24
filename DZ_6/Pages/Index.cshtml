@@ -1,0 +1,79 @@
+﻿@page "{handler?}"
+@using System.Globalization
+@model IndexModel
+@{
+    ViewData["Title"] = "ДЗ 6";
+}
+
+<div class="text-center bg-secondary-subtle">
+    <form class="mb-3" method="get">
+        <label for="name">Введите название блюда </label>
+        <input class="form-control d-inline w-auto" type="text" name="name" />
+        <input type="hidden" name="handler" value="ByName" />
+        <button class="btn btn-primary" type="submit">Поиск по названию</button>
+    </form>
+    <form class="mb-3" method="get">
+        <label>Введите стоимость блюда </label>
+        <input class="form-control d-inline w-auto" type="number" name="cost" step="0.01" min="0" />
+        <input type="hidden" name="handler" value="ByCost" />
+        <button class="btn btn-primary" type="submit">Поиск по цене</button>
+    </form>
+
+    <h3 class="mt-2">Список блюд</h3>
+    <table class="table table-bordered table-striped table-info">
+        <thead>
+            <tr>
+                <th class="text-primary">Название</th>
+                <th class="text-primary">Стоимость</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (Dish dish in Model.DisplayedDishes)
+            {
+                <tr>
+                    <td class="text-primary">@dish.Name</td>
+                    <td class="text-primary">@dish.Cost.ToString("C", CultureInfo.CreateSpecificCulture("ru-RU"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-secondary mt-2">
+        <h4>Примеры вызова</h4>
+        <ul class="text-start d-inline-block">
+            <li><code>/Index/ByName?name=carbonara</code></li>
+            <li><code>/Index?handler=ByName&name=carbonara</code></li>
+            <li><code>/Index/ByCost?cost=350.50</code></li>
+            <li><code>/Index?handler=ByCost&cost=350.50</code></li>
+        </ul>
+
+        <h4 class="pt-1">Доступные блюда</h4>
+        <table class="table table-sm d-inline">
+            <tr>
+                <th>Название</th>
+                <th>Стоимость</th>
+            </tr>
+            <tr>
+                <td>carbonara</td>
+                <td>350.50</td>
+            </tr>
+            <tr>
+                <td>borscht</td>
+                <td>220.00</td>
+            </tr>
+            <tr>
+                <td>caesar_chicken</td>
+                <td>280.75</td>
+            </tr>
+            <tr>
+                <td>margherita_pizza</td>
+                <td>450.00</td>
+            </tr>
+            <tr>
+                <td>olivier_salad</td>
+                <td>180.30</td>
+            </tr>
+        </table>
+    </div>
+</div>

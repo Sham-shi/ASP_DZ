@@ -1,0 +1,49 @@
+﻿@page "{handler?}"
+@model IndexModel
+@{
+    ViewData["Title"] = "ДЗ 7";
+}
+
+<div class="text-center bg-secondary-subtle">
+    <form class="m-3" method="get">
+        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
+            <label class="form-label mb-0" for="name">Введите автора</label>
+            <input class="form-control flex-shrink-1 w-auto" type="text" name="name" id="name" />
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary"
+                asp-page-handler="ByName">
+            Вывести на экран
+        </button>
+
+        <button type="submit"
+                class="btn btn-primary"
+                asp-page-handler="SaveFile">
+            Сохранить файл
+        </button>
+
+        <button type="submit"
+                class="btn btn-primary"
+                asp-page-handler="Json">
+            Вывести JSON
+        </button>
+    </form>
+
+    <div class="text-secondary mt-2">
+        <h4>Примеры вызова</h4>
+        <ul class="d-inline-block">
+            <li><code>/Index/ByName?name=esenin</code></li>
+            <li><code>/Index/ByName?name=mayakovsky</code></li>
+            <li><code>/Index/ByName?name=valiullin</code></li>
+            <li><code>/Index/SaveFile?name=esenin</code></li>
+            <li><code>/Index/SaveFile?name=mayakovsky</code></li>
+            <li><code>/Index/SaveFile?name=valiullin</code></li>
+        </ul>
+    </div>
+
+    <div class="card card-body border-primary bg-secondary text-info d-inline-block">
+        <h3>Содержимое файла</h3>
+        <pre><i>@Model.FileContent</i></pre>
+    </div>
+</div>

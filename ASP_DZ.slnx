@@ -2,7 +2,16 @@
   <Folder Name="/DZ-2/">
     <Project Path="DZ_2/DZ_2.csproj" Id="9b529b49-21c0-4a48-9653-44fef827d9a1" />
   </Folder>
+  <Folder Name="/DZ-3/">
+    <Project Path="DZ_3/DZ_3.csproj" Id="ab4f7bae-c0b9-43d7-a858-410c3308a3d0" />
+  </Folder>
   <Folder Name="/DZ-5/">
     <Project Path="DZ_5/DZ_5.csproj" />
+  </Folder>
+  <Folder Name="/DZ-6/">
+    <Project Path="DZ_6/DZ_6.csproj" Id="d3deda5e-638b-46b9-9afd-df8898c0ff3e" />
+  </Folder>
+  <Folder Name="/DZ-7/">
+    <Project Path="DZ_7/DZ_7.csproj" Id="75bfdbe3-aa87-4999-a22e-969f5ea7fca4" />
   </Folder>
 </Solution>
