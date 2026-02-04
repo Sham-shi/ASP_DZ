@@ -22,7 +22,7 @@ namespace DZ_7.Pages
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                FileContent = "Пустая строка";
+                FileContent = "<div class='alert alert-danger'><strong>Ошибка:</strong> Пустая строка</div>";
                 return Page();
             }
 
@@ -32,7 +32,12 @@ namespace DZ_7.Pages
             }
             else
             {
-                return Redirect($"https://yandex.ru/search/?text={Uri.EscapeDataString(name)}");
+                FileContent = $@"
+                    <div class='alert alert-warning'>
+                        <h5>Автор '{name}' не найден</h5>
+                        <a href='https://yandex.ru/search/?text={Uri.EscapeDataString(name)}' target='_blank' class='alert-link'>Поиск в Яндексе</a>
+                    </div>";
+                return Page();
             }
         }
 
@@ -40,11 +45,15 @@ namespace DZ_7.Pages
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return BadRequest("Имя автора не указано.");
+                FileContent = "<div class='alert alert-danger'><strong>Ошибка:</strong> Имя автора не указано</div";
+                return Page();
             }
 
             if (!poetNames.TryGetValue(name, out string? fileName))
-                return BadRequest($"Автора '{name}' нет в нашей базе данных.");
+            {
+                FileContent = $"<div class='alert alert-danger'><strong>Ошибка:</strong> Автора '{name}' нет в нашей базе данных</div>";
+                return Page();
+            }
 
             try
             {
@@ -64,7 +73,8 @@ namespace DZ_7.Pages
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return BadRequest("Имя автора не указано.");
+                FileContent = "<div class='alert alert-danger'><strong>Ошибка:</strong> Имя автора не указано</div>";
+                return Page();
             }
 
             if (!poetNames.TryGetValue(name, out string? fileName))
@@ -82,7 +92,8 @@ namespace DZ_7.Pages
 
         private IActionResult ShowFile(string fileName)
         {
-            FileContent = ReadFileContent(fileName);
+            string content = ReadFileContent(fileName);
+            FileContent = $"<pre class='card-text'>{content}</pre>";
             return Page();
         }
 
