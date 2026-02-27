@@ -1,0 +1,89 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 0;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+
+
+/* === Базовый стиль === */
+.custom-nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    text-transform: uppercase;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* === HOVER === */
+.custom-nav-link:hover {
+    color: #0d6efd !important;
+    background: rgba(13, 110, 253, 0.15);
+    border-radius: 4px;
+}
+
+/* === FOCUS === */
+.custom-nav-link:focus {
+    color: #0d6efd !important;
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+    background: rgba(13, 110, 253, 0.15);
+}
+
+/* === ACTIVE === */
+.custom-nav-link.active {
+    color: #0d6efd !important;
+    font-weight: 700;
+    background: rgba(13, 110, 253, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+}
+
+/* === Подчеркивание для active === */
+.custom-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: #0d6efd;
+    border-radius: 2px;
+}
+
+/* === DISABLED === */
+.custom-nav-link.disabled {
+    color: #6c757d !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

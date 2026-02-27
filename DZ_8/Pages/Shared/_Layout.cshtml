@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DZ_8</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DZ_8.styles.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    @{
+        // Получаем имя текущей страницы (например, "/Index" или "/Privacy")
+        var currentPage = ViewContext.RouteData.Values["Page"]?.ToString();
+    }
+    <!-- Верхнее меню -->
+    <header>
+        <nav class="navbar navbar-expand-md bg-secondary-subtle">
+            <div class="container">
+                <div class="row w-100 align-items-center">
+                    <div class="col-6">
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">
+                            <img src="Images/G&P_logo.png" alt="Gains&Pains" width="40" height="40">
+                            <span class="h4 mb-0">GAINS & PAINS</span>
+                        </a>
+                    </div>
+                    <div class="col-6 d-flex align-items-center justify-content-end fw-light font-monospace gap-3">
+                        <!-- Телефон -->
+                        <a href="tel:+79999999999"
+                           class="d-inline-flex align-items-center text-decoration-none">
+                            <svg bootstrap-icon="TelephoneFill" width="16" height="16" aria-label="Telephone" class="me-1"></svg>
+                            <span class="align-middle">+7(999)999-99-99</span>
+                        </a>
+
+                        <!-- Соцсети -->
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="https://rutube.ru/" class="icon icon1" aria-label="Rutube" target="_blank"></a>
+                            <a href="https://t.me/" class="icon icon2" aria-label="Telegram" target="_blank"></a>
+                            <a href="https://vk.com/" class="icon icon3" aria-label="VKontakte" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Нижнее меню -->
+    <nav class="navbar navbar-expand-md bg-dark border-bottom box-shadow sticky-top fw-medium" data-bs-theme="dark">
+        <div class="container">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav text-uppercase">
+                    <li class="nav-item">
+                        <a class="nav-link custom-nav-link @(currentPage == "/Index" ? "active" : "")"
+                            aria-current="@(currentPage == "/Index" ? "page" : "")"
+                            asp-area="" 
+                            asp-page="/Index">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link custom-nav-link @(currentPage == "/Privacy" ? "active" : "")"
+                            aria-current="@(currentPage == "/Privacy" ? "page" : "")"
+                            asp-area="" 
+                            asp-page="/Privacy">О разработчике</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <button type="button" class="border-0 bg-transparent text-uppercase custom-nav-link" data-bs-toggle="modal" data-bs-target="#login">
+                            <svg class="mb-1" bootstrap-icon="BoxArrowInRight" width="16" height="16" aria-label="Войти"></svg>
+                            Войти
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="border-0 bg-transparent"
+                    type="button" 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#adminMenu"
+                    aria-controls="adminMenu">
+                <svg bootstrap-icon="Gear" width="16" height="16" aria-label="Панель админа"></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main role="main" class="flex-grow-1">
+        <div class="container bg-secondary-subtle pb-1">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer text-muted bg-dark py-3" data-bs-theme="dark">
+        <div class="container">
+            &copy; 2026 - DZ_8 - <a asp-area="" asp-page="/Privacy">О разработчике</a>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для входа (id="login"), перенес сюда, т.к. был конфликт отображения из-за класса sticky-top -->
+    <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <h1 class="modal-title fs-5 fw-bold mb-0" id="loginModal">Авторизация</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body p-5 pt-0">
+
+                    <form class="">
+                        <div class="form-floating mb-3">
+                            <input type="email"
+                                   class="form-control rounded-3"
+                                   id="email"
+                                   placeholder="name@example.com" />
+                            <label for="email">Email</label>
+                        </div>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password"
+                                   class="form-control rounded-3 pe-5"
+                                   id="password"
+                                   placeholder="" />
+                            <label for="password">Пароль</label>
+
+                            <!-- Кнопка переключения видимости -->
+                            <button type="button"
+                                    class="btn position-absolute top-50 end-0 translate-middle-y me-3 p-0 border-0 bg-transparent"
+                                    id="togglePassword"
+                                    aria-label="Показать/скрыть пароль"
+                                    style="z-index: 10;">
+
+                                <!-- Иконка "глаз закрыт" (видима по умолчанию) -->
+                                <svg bootstrap-icon="EyeSlash"
+                                     id="iconEyeSlash"
+                                     width="16" height="16"
+                                     aria-hidden="true"></svg>
+
+                                <!-- Иконка "глаз открыт" (скрыта по умолчанию) -->
+                                <svg bootstrap-icon="Eye"
+                                     id="iconEye"
+                                     width="16" height="16"
+                                     aria-hidden="true"
+                                     style="display: none;"></svg>
+                            </button>
+                        </div>
+
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                                type="submit">
+                            Войти
+                        </button>
+
+                        @* <hr class="my-4" />
+                                            <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>
+                                            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                                                    type="submit">
+                                                <svg class="bi me-1" width="16" height="16" aria-hidden="true">
+                                                    <use xlink:href="#google"></use>
+                                                </svg>
+                                                Sign up with Google
+                                            </button>
+                                            <button class="w-100 py-2 mb-2 btn btn-outline-primary rounded-3"
+                                                    type="submit">
+                                                <svg class="bi me-1" width="16" height="16" aria-hidden="true">
+                                                    <use xlink:href="#facebook"></use>
+                                                </svg>
+                                                Sign up with Facebook
+                                            </button>
+                                            <button class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3"
+                                                    type="submit">
+                                                <svg class="bi me-1" width="16" height="16" aria-hidden="true">
+                                                    <use xlink:href="#github"></use>
+                                                </svg>
+                                                Sign up with GitHub
+                                            </button> *@
+                    </form>
+                </div>
+                <div class="modal-footer m-auto">
+                    <a class="small" href="">Зарегистироваться</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Меню админа, перенес сюда, т.к. был конфликт отображения из-за класса sticky-top -->
+    <div class="offcanvas offcanvas-start text-bg-dark"
+        data-bs-scroll="true" 
+        data-bs-backdrop="static"
+        tabindex="-1" 
+        id="adminMenu" 
+        aria-labelledby="adminMenuOptionsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">
+                Панель администратора
+            </h5>
+            <button type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-uppercase">
+                <li class="nav-item">
+                    <a 
+                        class="nav-link custom-nav-link @(currentPage == "/Index" ? "active" : "")" 
+                        aria-current="@(currentPage == "/Index" ? "page" : "")"
+                        asp-area="" 
+                        asp-page="/Index">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link custom-nav-link @(currentPage == "/Privacy" ? "active" : "")"
+                        aria-current="@(currentPage == "/Privacy" ? "page" : "")"
+                        asp-area="" 
+                        asp-page="/Privacy">О разработчике</a>
+                </li>
+                <a class="nav-link custom-nav-link" aria-current="page" href="#">Таблица1</a>
+                <a class="nav-link custom-nav-link" aria-current="page" href="#">Таблица2</a>
+                <a class="nav-link custom-nav-link" aria-current="page" href="#">Таблица3</a>
+            </ul>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    // Переключаем тип поля
+                    const type = passwordInput.type === 'password' ? 'text' : 'password';
+                    passwordInput.type = type;
+
+                    // Переключаем иконки
+                    document.getElementById('iconEye').style.display = type === 'password' ? 'none' : 'inline';
+                    document.getElementById('iconEyeSlash').style.display = type === 'password' ? 'inline' : 'none';
+                });
+            }
+        });
+
+        var menu_btn = document.querySelector("#menu-btn");
+        var sidebar = document.querySelector("#sidebar");
+        var container = document.querySelector(".my-container");
+        menu_btn.addEventListener("click", () => {
+            sidebar.classList.toggle("active-nav");
+            container.classList.toggle("active-cont");
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

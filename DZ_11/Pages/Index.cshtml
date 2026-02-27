@@ -46,7 +46,7 @@
 
         <div class="d-flex align-items-center justify-content-center gap-2 py-3">
             <label class="form-label mb-0" asp-for="WorkoutSignUp.TrainingLevel"></label>
-            <select class="form-control bg-secondary-subtle" asp-for="WorkoutSignUp.TrainingLevel" asp-items="Html.GetEnumSelectList<TrainingLevelType>()">
+            <select class="form-select bg-secondary-subtle" asp-for="WorkoutSignUp.TrainingLevel" asp-items="Html.GetEnumSelectList<TrainingLevelType>()">
                 <option value="">-- Выберите уровень --</option>
             </select>
             <span asp-validation-for="WorkoutSignUp.TrainingLevel" class="text-danger small"></span>

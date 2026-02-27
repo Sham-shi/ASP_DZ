@@ -23,4 +23,7 @@
   <Folder Name="/DZ-7/">
     <Project Path="DZ_7/DZ_7.csproj" Id="75bfdbe3-aa87-4999-a22e-969f5ea7fca4" />
   </Folder>
+  <Folder Name="/DZ-8/">
+    <Project Path="DZ_8/DZ_8.csproj" Id="0c86a4f1-23aa-4531-be3b-838487ddeb15" />
+  </Folder>
 </Solution>
