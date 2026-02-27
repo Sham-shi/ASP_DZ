@@ -7,7 +7,11 @@ namespace DZ_8.Pages
     {
         public void OnGet()
         {
-
+            ViewData["Cities"] = new List<string>
+            {
+                "Москва", "Токио", "Нью-Йорк", "Лондон", "Париж",
+                "Пекин", "Стамбул", "Шанхай", "Дели", "Сан-Паулу"
+            };
         }
     }
 }
