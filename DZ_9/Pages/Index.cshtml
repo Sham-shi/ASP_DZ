@@ -1,0 +1,165 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<div class="hero-container d-flex flex-column justify-content-center align-items-center text-center">
+    <h1 class="hero-title line-1 pb-5 d-flex align-items-center"><span class="pains">Pains</span> — <span class="subtitle gy-4">временно</span></h1>
+    <h1 class="hero-title line-2 pb-5 d-flex align-items-center"><span class="gains">Gains</span> — <span class="subtitle gy-4">навсегда</span></h1>
+    <h1 class="hero-title line-3">
+        <span class="gains">Gains</span> & <span class="pains">Pains</span>:
+        <span class="tagline">Честный фитнес</span>
+    </h1>
+</div>
+<section class="philosophy-section py-5 py-lg-6">
+    <h2 class="philosophy-main-title text-center text-uppercase mb-5">
+        <span class="gains">Gains</span> & <span class="pains">Pains</span> —
+        это не просто зал.<br class="d-none d-md-block">Это философия
+    </h2>
+
+    <div class="philosophy-grid-wrapper">
+        <div class="row g-0 philosophy-grid">
+            <!-- Левая карточка -->
+            <div class="col-md-6 philosophy-card left-card reveal-left">
+                <div class="card-overlay"></div>
+                <div class="card-body card-content p-4 p-md-5">
+                    <div class="card-text">
+                        <p>Здесь нет места для легких путей. Сюда приходят за настоящими изменениями.</p>
+                        <p>
+                            Каждый грамм силы и сантиметр прогресса оплачен решимостью —
+                            <span class="highlight">сдаться или прорваться</span>.
+                        </p>
+                        <p>
+                            Мы не верим в волшебные таблетки. Мы верим в пот, характер и
+                            <span class="highlight">последнее повторение</span>, сделанное на пределе.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая карточка -->
+            <div class="col-md-6 philosophy-card right-card reveal-right">
+                <div class="card-overlay"></div>
+                <div class="card-body card-content p-4 p-md-5">
+                    <div class="card-text">
+                        <p>Наша истина проста:</p>
+                        <p class="truth-statement"><span class="gains">Боль</span> — это валюта роста.</p>
+                        <p class="truth-statement"><span class="pains">Усталость</span> — плата за выносливость.</p>
+                        <p class="truth-statement"><span class="gains">Дискомфорт</span> — фундамент новой уверенности.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="zones-section py-5 py-lg-6">
+    <div class="container">
+        <h2 class="zones-title text-center text-uppercase mb-5">
+            И мы создали пространство,<br class="d-none d-md-block">где эта философия <span class="gains">оживает</span>
+        </h2>
+
+        <div id="zonesCarousel" class="carousel carousel-fade slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                <!-- Слайд 1: Профессиональное железо -->
+                <div class="carousel-item active">
+                    <div class="zone-slide" style="background-image: url('/Images/zone-iron.png');">
+                        <div class="zone-overlay"></div>
+                        <div class="zone-content container">
+                            <div class="zone-text-wrapper">
+                                <h3 class="zone-title-item text-uppercase">
+                                    <span class="gains">Профессиональное железо</span>
+                                </h3>
+                                <p class="zone-description">
+                                    Наши грифы и тренажеры — это инструменты, которые задают тебе тот самый вопрос:
+                                    <span class="highlight">«Насколько ты этого хочешь?»</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 2: Зоны для настоящей работы -->
+                <div class="carousel-item">
+                    <div class="zone-slide" style="background-image: url('/Images/zone-work.png');">
+                        <div class="zone-overlay"></div>
+                        <div class="zone-content container">
+                            <div class="zone-text-wrapper">
+                                <h3 class="zone-title-item text-uppercase">
+                                    <span class="pains">Зоны для настоящей работы</span>
+                                </h3>
+                                <p class="zone-description">
+                                    Просторные кардио- и силовые залы, где нет места лишним словам.
+                                    <span class="highlight">Только ты и твоя работа.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 3: Команда, которая понимает -->
+                <div class="carousel-item">
+                    <div class="zone-slide" style="background-image: url('/Images/zone-team.jpg');">
+                        <div class="zone-overlay"></div>
+                        <div class="zone-content container">
+                            <div class="zone-text-wrapper">
+                                <h3 class="zone-title-item text-uppercase">
+                                    <span class="gains">Команда, которая понимает</span>
+                                </h3>
+                                <p class="zone-description">
+                                    Наши тренеры прошли через это сами. Они не будут тебя жалеть.
+                                    Они будут грамотно направлять твою боль в рост, помогая превращать
+                                    <span class="highlight">Pains в твои личные Gains.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайд 4: Атмосфера поддержки -->
+                <div class="carousel-item">
+                    <div class="zone-slide" style="background-image: url('/Images/zone-atmosphere.png');">
+                        <div class="zone-overlay"></div>
+                        <div class="zone-content container">
+                            <div class="zone-text-wrapper">
+                                <h3 class="zone-title-item text-uppercase">
+                                    <span class="pains">Атмосфера поддержки</span>
+                                </h3>
+                                <p class="zone-description">
+                                    Ты окружишь себя такими же целеустремленными людьми. Здесь не ждут легких путей.
+                                    <span class="highlight">Здесь ценят не слова, а пот на полу.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Управление: стрелки -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#zonesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущая зона</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#zonesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующая зона</span>
+            </button>
+        </div>
+
+        <!-- Финальные заголовки -->
+        <div class="zones-final text-center mt-5 pt-4">
+            <h2 class="zones-final-title text-uppercase mb-4">
+                Прими свой вызов.<br class="d-none d-md-block">
+                Уважай свой путь.<br class="d-none d-md-block">
+                <span class="gains">Заработай свой результат</span><br class="d-none d-md-block">
+                в месте, созданном для преодоления.
+            </h2>
+            <h3 class="zones-final-slogan text-uppercase">
+                <span class="gains">Gains</span> & <span class="pains">Pains</span> —
+                честный фитнес для сильных духом.
+            </h3>
+        </div>
+    </div>
+</section>
+

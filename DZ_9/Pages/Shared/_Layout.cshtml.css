@@ -1,0 +1,43 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+main {
+    background: linear-gradient(135deg, rgba(10, 10, 15, 0.95), rgba(20, 15, 25, 0.9)), url('Images/fitGiri.png') center/cover no-repeat;
+    background-attachment: fixed, fixed;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s ease;
+}
+
+.icon1 {
+    background-image: url('Images/IconsSocial/Icon_RUTUBE_dark_mono.png');
+}
+
+    .icon1:hover {
+        background-image: url('Images/IconsSocial/Icon_RUTUBE_dark_color.png');
+    }
+
+.icon2 {
+    background-image: url('Images/IconsSocial/telegram_black_logo_icon.png');
+}
+
+    .icon2:hover {
+        background-image: url('Images/IconsSocial/telegram_color_logo_icon.png');
+    }
+
+.icon3 {
+    background-image: url('Images/IconsSocial/vk_logo_icon_black.png');
+}
+
+    .icon3:hover {
+        background-image: url('Images/IconsSocial/vk_logo_icon_color.png');
+    }
