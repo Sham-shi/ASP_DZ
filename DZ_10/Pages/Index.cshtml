@@ -1,37 +1,227 @@
-﻿@page
+﻿@page "{handler?}"
 @model IndexModel
 @{
-    ViewData["Title"] = "Геокодирование";
+    ViewData["Title"] = "Геокодирование городов";
 }
 
-<div class="container">
-    <h1>Геокодирование городов</h1>
-    <p class="text-muted">Локальная база данных с поддержкой русских названий</p>
+@functions {
+    private string FormatCoordinate(double value)
+    {
+        return value.ToString().Replace(",", ".");
+    }
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">🌍 Найти координаты города</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="Search">
+                        <div class="mb-3">
+                            <label for="cityName" class="form-label">Название города:</label>
+                            <div class="input-group">
+                                <input type="text"
+                                       id="cityName"
+                                       name="CityName"
+                                       class="form-control @((Model.CityNotFound || ModelState.ContainsKey("CityName")) ? "" : "is-invalid")"
+                                       value="@Model.CityName"
+                                       placeholder="Введите город (например: Москва, Казань, Санкт-Петербург)"
+                                       required>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search me-1"></i>Найти
+                                </button>
+                            </div>
+                            <div class="invalid-feedback">
+                                @if (ModelState.ContainsKey("CityName"))
+                                {
+                                    @Html.ValidationMessage("CityName")
+                                }
+                            </div>
+                            <div class="form-text">
+                                База данных содержит более 30 000 городов мира. Поддерживаются русские и английские названия.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.SearchPerformed)
+    {
+        @if (Model.Location != null)
+        {
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto">
+                    <div class="card border-success shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0">✅ Результат поиска</h3>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="mb-4">Координаты города: <strong>@Model.Location.City</strong></h4>
+
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item">
+                                    <strong>Широта:</strong> <span class="fw-bold">@Model.Location.Latitude.ToString("F6")</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Долгота:</strong> <span class="fw-bold">@Model.Location.Longitude.ToString("F6")</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Страна:</strong> <span class="fw-bold">@Model.Location.Country</span>
+                                </li>
+                                @if (!string.IsNullOrEmpty(Model.Location.State))
+                                {
+                                    <li class="list-group-item">
+                                        <strong>Регион:</strong> <span class="fw-bold">@Model.Location.State</span>
+                                    </li>
+                                }
+                            </ul>
+
+                            <div class="mb-4">
+                                <h5 class="mb-3">📍 Посмотреть на карте:</h5>
+                                <div class="d-grid gap-2">
+                                    <a href="https://yandex.ru/maps/?ll=@(Model.Location.Longitude)%2C@(Model.Location.Latitude)&z=12&mode=search&text=@Uri.EscapeDataString(Model.Location.City)"
+                                       target="_blank"
+                                       class="btn btn-lg btn-danger">
+                                        Открыть в Яндекс.Картах
+                                    </a>
+
+                                    <a href="https://2gis.ru/search/@(Uri.EscapeDataString(Model.Location.City))" 
+                                       target="_blank" 
+                                       class="btn btn-lg btn-success">
+                                        <i class="bi bi-map me-2"></i>2ГИС
+                                    </a>
+                                    
+                                    <a href="https://www.google.com/maps/search/@(Uri.EscapeDataString(Model.Location.City))/@(FormatCoordinate(Model.Location.Latitude))%2C@(FormatCoordinate(Model.Location.Longitude))&z=13"
+                                       target="_blank"
+                                       class="btn btn-lg btn-warning">
+                                        Google Карты
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <strong>ℹ️ Координаты:</strong>
+                                <code>@Model.Location.Latitude.ToString("F6"), @Model.Location.Longitude.ToString("F6")</code>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-1"></i>Новый поиск
+                                </a>
+                                <button type="button"
+                                        class="btn btn-success"
+                                        onclick="copyCoordinates('@Model.Location.Latitude.ToString("F6")', '@Model.Location.Longitude.ToString("F6")')">
+                                    Копировать
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (Model.CityNotFound)
+        {
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <h4 class="alert-heading">⚠️ Город не найден</h4>
+                        <p>Город "<strong>@Model.CityName</strong>" не найден в базе данных.</p>
+                        <hr>
+                        <p class="mb-0">
+                            <strong>Советы:</strong>
+                            <ul>
+                                <li>Проверьте правильность написания</li>
+                                <li>Попробуйте английское название (например, "Moscow" вместо "Москва")</li>
+                                <li>Убедитесь, что город есть в базе (требуется население > 15 000 человек)</li>
+                            </ul>
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 
     <div class="row">
-        <div class="col-md-6 mb-4">
-            <geocode city="Москва" show-map="true" map-width="100%" map-height="300px"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Казань" show-map="true" map-width="100%" map-height="300px"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Санкт-Петербург"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Екатеринбург"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Новосибирск"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Владивосток"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Сочи"></geocode>
-        </div>
-        <div class="col-md-6 mb-4">
-            <geocode city="Краснодар"></geocode>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Примеры поиска</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-1 row-cols-md-3 g-3">
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">🇷🇺 Россия</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li>Москва</li>
+                                        <li>Санкт-Петербург</li>
+                                        <li>Казань</li>
+                                        <li>Новосибирск</li>
+                                        <li>Екатеринбург</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">🌍 Мир</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li>New York</li>
+                                        <li>London</li>
+                                        <li>Paris</li>
+                                        <li>Berlin</li>
+                                        <li>Tokyo</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">ℹ️ О базе данных</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li>33 000+ городов</li>
+                                        <li>Население > 15 000</li>
+                                        <li>Поддержка 200+ стран</li>
+                                        <li>Русские и английские названия</li>
+                                        <li>Полностью офлайн</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function copyCoordinates(lat, lon) {
+            const text = `${lat}, ${lon}`;
+            navigator.clipboard.writeText(text).then(() => {
+                const alert = document.createElement('div');
+                alert.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+                alert.style.zIndex = '9999';
+                alert.innerHTML = `<strong>✅ Скопировано!</strong><br>${text}`;
+                document.body.appendChild(alert);
+
+                setTimeout(() => {
+                    alert.remove();
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка копирования:', err);
+                alert('Не удалось скопировать координаты');
+            });
+        }
+    </script>
+}
