@@ -5,6 +5,20 @@
 
 // Intersection Observer для анимации появления элементов
 document.addEventListener('DOMContentLoaded', function () {
+    // ==== Скрипт для переключения видимости пароля ====
+    const toggle = document.getElementById('togglePassword');
+    const input = document.getElementById('password');
+    const eye = document.getElementById('eye');
+    const eyeSlash = document.getElementById('eyeSlash');
+
+    if (toggle && input) {
+        toggle.addEventListener('click', function () {
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            eye.classList.toggle('d-none', !isPassword);
+            eyeSlash.classList.toggle('d-none', isPassword);
+        });
+    }
 
     // ===== Анимация титула для карточек =====
     const mainTitleObserver = new IntersectionObserver((entries) => {
@@ -59,54 +73,3 @@ document.addEventListener('DOMContentLoaded', function () {
         titleObserver.observe(bottomTitle);
     }
 });
-//console.log("✅ site.js загружен!");
-//document.addEventListener('DOMContentLoaded', function () {
-
-//    console.log("✅ DOM загружен, запускаем анимации...");
-
-//    // Проверка: находит ли скрипт ваши элементы?
-//    const cards = document.querySelectorAll('.reveal-left, .reveal-right');
-//    console.log(`🔍 Найдено карточек для анимации: ${cards.length}`);
-
-//    if (cards.length === 0) {
-//        console.warn("⚠️ Внимание: Элементы с классами .reveal-left / .reveal-right не найдены в DOM!");
-//    }
-
-
-
-//    // ===== Анимация карточек (выезд слева/справа) =====
-//    const cardObserver = new IntersectionObserver((entries) => {
-//        entries.forEach(entry => {
-//            if (entry.isIntersecting) {
-//                entry.target.classList.add('active');
-//                // Опционально: прекратить наблюдение после срабатывания
-//                 cardObserver.unobserve(entry.target);
-//            }
-//        });
-//    }, {
-//        threshold: 0.2,           // Срабатывает, когда видно 20% элемента
-//        rootMargin: '0px 0px -100px 0px' // Отступ снизу для раннего запуска
-//    });
-
-//    document.querySelectorAll('.reveal-left, .reveal-right').forEach(card => {
-//        cardObserver.observe(card);
-//    });
-
-//    // ===== Анимация нижнего заголовка (появление снизу) =====
-//    const titleObserver = new IntersectionObserver((entries) => {
-//        entries.forEach(entry => {
-//            if (entry.isIntersecting) {
-//                entry.target.classList.add('visible');
-//                // titleObserver.unobserve(entry.target);
-//            }
-//        });
-//    }, {
-//        threshold: 0.5,           // Срабатывает, когда видно 50% элемента
-//        rootMargin: '0px 0px -150px 0px'
-//    });
-
-//    const bottomTitle = document.querySelector('.philosophy-bottom-title');
-//    if (bottomTitle) {
-//        titleObserver.observe(bottomTitle);
-//    }
-//});

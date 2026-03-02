@@ -252,25 +252,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Скрипт для переключения видимости пароля -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggle = document.getElementById('togglePassword');
-            const input = document.getElementById('password');
-            const eye = document.getElementById('eye');
-            const eyeSlash = document.getElementById('eyeSlash');
-
-            if (toggle && input) {
-                toggle.addEventListener('click', function() {
-                    const isPassword = input.type === 'password';
-                    input.type = isPassword ? 'text' : 'password';
-                    eye.classList.toggle('d-none', !isPassword);
-                    eyeSlash.classList.toggle('d-none', isPassword);
-                });
-            }
-        });
-    </script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
