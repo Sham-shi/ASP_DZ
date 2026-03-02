@@ -1,10 +1,45 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Геокодирование";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-4">
+    <h1 class="mb-4">🌍 Геокодирование городов</h1>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <geocode city="Москва" show-map="true" map-width="100%" map-height="300px"></geocode>
+        </div>
+        <div class="col-md-6 mb-4">
+            <geocode city="Казань" show-map="true" map-width="100%" map-height="300px"></geocode>
+        </div>
+        <div class="col-md-6 mb-4">
+            <geocode city="Санкт-Петербург"></geocode>
+        </div>
+        <div class="col-md-6 mb-4">
+            <geocode city="Екатеринбург"></geocode>
+        </div>
+    </div>
 </div>
+
+<style>
+    .geocode-result {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+    }
+
+        .geocode-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 0;
+    }
+</style>
