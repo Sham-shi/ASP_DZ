@@ -7,20 +7,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
-// ✅ Правильная регистрация типизированного клиента
-builder.Services.AddHttpClient<IGeocoderService, OpenStreetMapGeocoder>(client =>
-{
-    client.BaseAddress = new Uri("https://nominatim.openstreetmap.org/"); // Без пробелов!
-    client.DefaultRequestHeaders.Add("User-Agent", "MyGeoApp/1.0 (your-email@example.com)");
-    client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
-    client.Timeout = TimeSpan.FromSeconds(10);
-});
-
-// Регистрация тег-хелпера (опционально, обычно не требуется)
-builder.Services.AddTransient<GeocodeTagHelper>();
-
+// Регистрация локального геокодера
+builder.Services.AddSingleton<IGeocoderService, LocalGeocoder>();
 
 var app = builder.Build();
+
+// Проверка наличия базы данных при запуске
+var dataPath = Path.Combine(AppContext.BaseDirectory, "Data", "cities15000.txt");
+if (File.Exists(dataPath))
+{
+    Console.WriteLine($"✅ База данных найдена: {dataPath}");
+    Console.WriteLine($"   Размер: {new FileInfo(dataPath).Length / 1024} KB");
+}
+else
+{
+    Console.WriteLine($"❌ База данных НЕ НАЙДЕНА: {dataPath}");
+    Console.WriteLine($"   Попробуйте скопировать файл вручную в эту папку");
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

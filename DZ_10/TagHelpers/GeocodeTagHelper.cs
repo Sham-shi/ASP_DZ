@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using DZ_10;
 
 namespace DZ_10.TagHelpers
 {
@@ -41,43 +40,23 @@ namespace DZ_10.TagHelpers
             if (location == null)
             {
                 output.Content.SetHtmlContent(
-                    $"<div class='alert alert-warning'>Не удалось найти координаты для города: {City.EscapeHtml()}</div>");
+                    $"<div class='alert alert-warning'>Город не найден в базе данных: {EscapeHtml(City)}</div>");
                 return;
             }
 
-            // ✅ Исправлено: убраны пробелы в URL iframe
-            var mapHtml = ShowMap
-                ? $@"
-                <div class='mt-3'>
-                    <iframe 
-                        width='{MapWidth}' 
-                        height='{MapHeight}' 
-                        style='border:1px solid #ccc; border-radius:4px;'
-                        loading='lazy'
-                        src='https://www.openstreetmap.org/export/embed.html?bbox={location.Longitude - 0.05}%2C{location.Latitude - 0.05}%2C{location.Longitude + 0.05}%2C{location.Latitude + 0.05}&layer=mapnik&marker={location.Latitude}%2C{location.Longitude}'>
-                    </iframe>
-                    <br/><small><a href='https://www.openstreetmap.org/?mlat={location.Latitude}&mlon={location.Longitude}#map=14/{location.Latitude}/{location.Longitude}'>Посмотреть на OpenStreetMap</a></small>
-                </div>"
-                : string.Empty;
-
             var content = $@"
-            <h4>📍 Координаты города: {City.EscapeHtml()}</h4>
-            <ul class='list-unstyled ms-3'>
+            <h4>Координаты города: {EscapeHtml(location.City)}</h4>
+            <ul class='list-unstyled'>
                 <li><strong>Широта:</strong> {location.Latitude:F6}</li>
                 <li><strong>Долгота:</strong> {location.Longitude:F6}</li>
-                <li><strong>Страна:</strong> {location.Country.EscapeHtml()}</li>
-                {(string.IsNullOrEmpty(location.State) ? "" : $"<li><strong>Регион:</strong> {location.State.EscapeHtml()}</li>")}
-            </ul>
-            {mapHtml}";
+                <li><strong>Страна:</strong> {EscapeHtml(location.Country)}</li>
+                {(string.IsNullOrEmpty(location.State) ? "" : $"<li><strong>Регион:</strong> {EscapeHtml(location.State)}</li>")}
+            </ul>";
 
             output.Content.SetHtmlContent(content);
         }
-    }
 
-    // Вспомогательный метод для экранирования HTML
-    internal static class StringExtensions
-    {
-        public static string EscapeHtml(this string str) =>
+        private string EscapeHtml(string str) =>
             str.Replace("&", "&amp;")
                .Replace("<", "&lt;")
                .Replace(">", "&gt;")
