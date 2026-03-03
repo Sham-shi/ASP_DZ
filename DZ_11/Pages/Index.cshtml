@@ -1,57 +1,173 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Регистрация";
 }
 
-<div class="text-center container">
-    <form method="post" asp-antiforgery="true" class="card card-body m-3 bg-secondary text-light">
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.FIO"></label>
-            <input class="form-control flex-shrink-1 w-auto bg-secondary-subtle" type="text" asp-for="WorkoutSignUp.FIO" /><br />
-            <span asp-validation-for="WorkoutSignUp.FIO" class="text-danger small"></span>
-        </div>
 
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.Age"></label>
-            <input class="form-control flex-shrink-1 w-auto bg-secondary-subtle" type="number" asp-for="WorkoutSignUp.Age" />
-            <span asp-validation-for="WorkoutSignUp.Age" class="text-danger small"></span>
-        </div>
+<div class="container py-4">
 
-        <div class="input-group justify-content-center gap-2 m-auto">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.Gender"></label><br />
-            <input class="form-check" type="radio" asp-for="WorkoutSignUp.Gender" value="1" id="gender-male" />
-            <label class="form-label mb-0" for="gender-male">Мужской</label>
-            <input class="form-check" type="radio" asp-for="WorkoutSignUp.Gender" value="2" id="gender-female" />
-            <label class="form-label mb-0" for="gender-female">Женский</label>
-            <span asp-validation-for="WorkoutSignUp.Gender" class="text-danger small"></span>
+    @* 🔹 Если регистрация успешна — показываем карточку *@
+    @if (Model.ShowResult && ModelState.IsValid)
+    {
+        <div class="card border-success shadow">
+            <div class="card-header bg-success text-light">
+                <h3 class="mb-0">@Model.Message</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>ФИО:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.FIO</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Возраст:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Age</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Пол:</strong>
+                        <span class="fw-bold">
+                            @(Model.WorkoutSignUp.Gender == Gender.Male ? "Мужской" : "Женский")
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Рост:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Height?.ToString("F2") м</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Вес:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Weight?.ToString("F1") кг</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>ИМТ:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.BMI.ToString("F1")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Уровень подготовки:</strong>
+                        <span class="fw-bold">
+                            @Model.WorkoutSignUp.TrainingLevel.GetDisplayName()
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Тренер:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Trainer</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Абонемент:</strong>
+                        <span class="fw-bold">
+                            @Model.WorkoutSignUp.Abonement.GetDisplayName()
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Телефон:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Phone</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Email:</strong>
+                        <span class="fw-bold">@Model.WorkoutSignUp.Email</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer bg-success-subtle">
+                <a asp-page="Index" class="btn btn-outline-success">← Зарегистрировать ещё одного</a>
+            </div>
         </div>
+    }
+    else
+    {
+        @* 🔹 Иначе показываем форму регистрации *@
+        <div class="card m-auto bg-secondary-subtle border-primary" style="max-width: 600px">
+            <div class="card-header bg-primary text-light">
+                <h3>@Model.Message</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-antiforgery="true" class="p-3 border-4 d-flex flex-column">
 
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.Height"></label>
-            <input class="form-control flex-shrink-1 w-auto bg-secondary-subtle" type="number" max="3.0" step="0.01" asp-for="WorkoutSignUp.Height" />
-            <span asp-validation-for="WorkoutSignUp.Height" class="text-danger small"></span>
+                    <label class="form-label mb-0" asp-for="WorkoutSignUp.FIO"></label>
+                    <input class="form-control" type="text" asp-for="WorkoutSignUp.FIO" /><br />
+                    <span asp-validation-for="WorkoutSignUp.FIO" class="text-danger small"></span>
+
+                    <label class="form-label mb-0" asp-for="WorkoutSignUp.Age"></label>
+                    <input class="form-range" type="range" value="0" max="120" asp-for="WorkoutSignUp.Age" id="age" />
+                    <output asp-for="WorkoutSignUp.Age" id="ageValue" aria-hidden="true"></output>
+                    <span asp-validation-for="WorkoutSignUp.Age" class="text-danger small"></span>
+
+                    <div class="input-group justify-content-start gap-2 my-3">
+                        <label class="form-label mb-0" asp-for="WorkoutSignUp.Gender"></label>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="WorkoutSignUp.Gender"
+                                   value="@((int)Gender.Male)" id="gender-male" />
+                            <label class="form-label mb-0" for="gender-male">Мужской</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="WorkoutSignUp.Gender"
+                                   value="@((int)Gender.Female)" id="gender-female" />
+                            <label class="form-label mb-0" for="gender-female">Женский</label>
+                        </div>
+                        <span asp-validation-for="WorkoutSignUp.Gender" class="text-danger small"></span>
+                    </div>
+
+                    <label class="form-label mb-0" asp-for="WorkoutSignUp.Height"></label>
+                    <input class="form-control" type="number" min="0" step="0.01" asp-for="WorkoutSignUp.Height" />
+                    <span asp-validation-for="WorkoutSignUp.Height" class="text-danger small"></span>
+
+                    <label class="form-label mb-0 mt-3" asp-for="WorkoutSignUp.Weight"></label>
+                    <input class="form-control" type="number" min="0" asp-for="WorkoutSignUp.Weight" />
+                    <span asp-validation-for="WorkoutSignUp.Weight" class="text-danger small"></span>
+
+                    <label class="form-label mb-0 mt-3" asp-for="WorkoutSignUp.TrainingLevel"></label>
+                    <select class="form-select" asp-for="WorkoutSignUp.TrainingLevel" asp-items="Html.GetEnumSelectList<TrainingLevelType>()">
+                    </select>
+                    <span asp-validation-for="WorkoutSignUp.TrainingLevel" class="text-danger small"></span>
+
+                    <label class="form-label mb-0 mt-3" asp-for="WorkoutSignUp.Trainer"></label>
+                    <select class="form-select" asp-for="WorkoutSignUp.Trainer" asp-items="@Model.Trainers">
+                    </select>
+                    <span asp-validation-for="WorkoutSignUp.Trainer" class="text-danger small"></span>
+
+                    <div class="input-group justify-content-start gap-2 my-3">
+                        <label class="form-label mb-0" asp-for="WorkoutSignUp.Abonement"></label><br />
+                        <input class="form-check" type="radio" asp-for="WorkoutSignUp.Abonement" value="@((int)AbonementType.Four)" id="four" />
+                        <label class="form-label mb-0" for="four">4 занятия</label>
+                        <input class="form-check" type="radio" asp-for="WorkoutSignUp.Abonement" value="@((int)AbonementType.Eight)" id="eight" />
+                        <label class="form-label mb-0" for="eight">8 занятий</label>
+                        <input class="form-check" type="radio" asp-for="WorkoutSignUp.Abonement" value="@((int)AbonementType.Unlimited)" id="unlimited" />
+                        <label class="form-label mb-0" for="unlimited">Безлимит</label>
+                        <span asp-validation-for="WorkoutSignUp.Abonement" class="text-danger small"></span>
+                    </div>
+
+                    <label class="form-label mb-0" asp-for="WorkoutSignUp.Phone"></label>
+                    <input class="form-control" type="text" asp-for="WorkoutSignUp.Phone" />
+                    <span asp-validation-for="WorkoutSignUp.Phone" class="text-danger small"></span>
+
+                    <label class="form-label mb-0 mt-3" asp-for="WorkoutSignUp.Email"></label>
+                    <input class="form-control" type="email" asp-for="WorkoutSignUp.Email" />
+                    <span asp-validation-for="WorkoutSignUp.Email" class="text-danger small"></span>
+
+                    <div class="d-flex align-items-center justify-content-center gap-2 py-3">
+                        <input class="form-check pe-1" type="checkbox" asp-for="WorkoutSignUp.ConsentProcessing" />
+                        <label class="form-label mb-0" asp-for="WorkoutSignUp.ConsentProcessing"></label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
+            </div>
         </div>
+    }
 
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.Weight"></label>
-            <input class="form-control flex-shrink-1 w-auto bg-secondary-subtle" type="number" asp-for="WorkoutSignUp.Weight" />
-            <span asp-validation-for="WorkoutSignUp.Weight" class="text-danger small"></span>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.BMI"></label>
-            <input class="form-control flex-shrink-1 w-auto bg-secondary-subtle" type="number" asp-for="WorkoutSignUp.BMI" disabled />
-        </div>
-
-        <div class="d-flex align-items-center justify-content-center gap-2 py-3">
-            <label class="form-label mb-0" asp-for="WorkoutSignUp.TrainingLevel"></label>
-            <select class="form-select bg-secondary-subtle" asp-for="WorkoutSignUp.TrainingLevel" asp-items="Html.GetEnumSelectList<TrainingLevelType>()">
-                <option value="">-- Выберите уровень --</option>
-            </select>
-            <span asp-validation-for="WorkoutSignUp.TrainingLevel" class="text-danger small"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    </form>
 </div>
+
+
+<script>
+    // This is an example script, please modify as needed
+    const rangeInput = document.getElementById('age');
+    const rangeOutput = document.getElementById('ageValue');
+
+    // Set initial value
+    rangeOutput.textContent = rangeInput.value;
+
+    rangeInput.addEventListener('input', function() {
+      rangeOutput.textContent = this.value;
+    });
+</script>
